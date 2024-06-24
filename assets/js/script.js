@@ -138,7 +138,8 @@ function dropApple(){
 }
 
 $(document).on('contextmenu', '.apple-picture', dropApple);
-$('.apple-picture').bind('swipedown', dropApple);
+$(document).on('swipedown', '.apple-picture', dropApple);
+/* $('.apple-picture').bind('swipedown', dropApple); */
 
 function nextBin(){
     
