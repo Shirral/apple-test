@@ -1,0 +1,305 @@
+https://css-tricks.com/almanac/properties/t/touch-action/ - 
+- PAN UP FOR SWIPE to drop apples?
+
+
+
+NEED DOING:
+
+--- PICKING PART ---
+
+    - ENTER PICKING MODE
+    - apples appearing on the screen
+        ~ different kinds (good, bad, several pics of each)
+    - clicking on apples collects them - ++ to "picked" var
+    - timer - going from 8:00 to 16:00
+        - 1s = 15 mins in-game; 1 round = 32s - HAHA - currently: 5s = 15 mins, barely 3 bins with crap mouse
+    - game ends when the timer hits 16:00
+    - WIN CONDITION: "picked" >= 150 (day) - should be impossible at first; adjust as needed
+    - GAME START - when button clicked (or just sth)
+    
+
+
+
+
+
+===================================
+
+- APPLES APPEARING ON THE SCREEN:
+    - randomly - on screen
+        - generate a RANDOM POSITION
+
+        1. put an apple on the screen - with a function! - DONE
+        2. put i in a very specific position - DONE
+        3. determine the range of positions, possible ones etc - 0% to 100% (top, left) - DONE
+            $(".apple-picture").css({'position': 'relative', 'top': '0%', 'left': '0%'});
+        4. make an array to draw from at random? or a script to generate the position within the limits right away - DONE
+        5. Math(random) - make the function
+            let applePosition = Math.floor(Math.random()*100) + '%'; - DONE
+        6. link the result to the apple pic appearing - DONE
+
+        7. FIX THE BUG where after the 2nd apple, the new ones are added to the 2nd one as a row and existing apples would move - they have the same class... they can't have the same class - DONE
+
+        8. make different kinds of apples appear! - DONE
+        
+
+    - 5-40 / tree (Screen); pick/drop all, then move on
+
+        - 5-40:
+        1. Put the function inside a loop that does 5 - DONE
+        2. Edit the loop to math.random a number between 5-40 - DONE
+        3. Hide the button on click - so only one set of apples at the screen at one time - DONE
+
+        - pick/drop all:
+
+        1. LEFT CLICK - pick: good apples - 
+            onclick: 
+            - applesPicked ++,  - DONE!
+            - animation: SUPERQUICKbig -> slower smalll (to 0), - DONE!
+            - this.remove (or html = '') - DONE!
+  
+        2. RIGHT CLICK - drop: bad apples - class: bad-apple
+             onclick: jQuery animation-transition: - DONE!
+            - movement to the bottom - outside of the screen, - DONE!
+            - with fade-out to transparent, - DONE!
+            - THEN this.remove (or html = '') - DONE!
+
+ 
+    ADD BIN: 
+            - draw bin (ugly placeholder)
+            - add bin
+            - draw tree
+            - add tree
+            - add bin apple number
+            - reduce apple appearing area to fit bin
+            - draw variations of bin - fullness lvl: empty/15/30/full apples (ugly placeholder)
+            - implement variations of bins (picure swap on reaching a certain number of apples picked - 43 - to be adusted)
+            - bring the next bin:
+	            - old bin - animate scroll out of the page
+	            - new bin - animate scroll into the page
+	            - bin apple number: reset to 0
+
+                 
+    - MOVE ON:
+
+        - when appleDiv html == '' -> 
+            - transition - swipe left - next tree
+            - run applesAppear again
+
+ 
+    - BAD APPLES / GOOD APPLES:
+
+        - class: good-apple, bad-apple
+        - add bad apple counter
+
+        FUTURE: get caught if % of bad in current bin is above max allowed per bin. Get told off if at least 1 apple bad, without consequences. Serious warning if got caught. If again after warning - chance next day. If still - packhouse.
+        FUTURE: too many bad in bins (above max allowed % ) - next day, angry Simon, warning. Once more - packhouse
+
+   
+
+ADD TIMER:
+    - make TIMER counting to...
+    - show it on the screen - as real life time - hours
+        - make a div for it, show it
+        - every x sec, update time on screen
+    - make new screen for game over [then update it with content dep. on outcome]
+    - when time's up, show next screen - replace appleDiv with gameOver
+
+    FUTURE: also add rounds (days), add passing sun and different colours of the environment lit by the sun 
+
+ADD WIN CONDITION: 
+
+- make a script that compares amount of apples picked with the win condition minimum
+(pick at least 3,5 bins per day (the more, the better - mentor's leaderboard script?))
+	- manually count total num of apples in 3,5 bins; if >= that - all is good
+- add victory screen - ''your supervisors were satisfied with your performance. Good job! Although, surely you could do even better...'' 
+- add fail screen - ''your supervisors are disappointed in you. An old, hunchback granny could pick faster than you! You better do better next time.''
+
+ADD FAIL CONDITION:
+
+ - check the numbers/% of bad in total
+ - on fail condition - fail. >5%?
+ - add a distinct message - ''upon inspection, your bins were filled with rotten apples...''
+
+ADD A TRY AGAIN BUTTON below the div with the outcome
+
+ADD STARTING SCREEN - with the story, wtf is happening, etc. - farmer explaining on the talking screen, vn style
+
+VISUALS
+
+	- draw apples, replace pics
+	- draw bins, replace pics
+	- draw tree, add as bg
+	- make nice buttons etc
+
+
+
+ 
+PICKING SCREEN - add modal explaining controls?
+
+
+
+MOBILE DEVICES ADJUSTMENT
+
+    - make it look good (media queries)
+
+---THIS---> 
+	- add swiping for dropping
+	
+
+THEN
+    - add cursor: pointer to buttons
+    
+IF ENOUGH TIME:
+
+    - add leaderboard
+    - fix bugs... (multiclicking same apples)
+    - ADD BIN AS A BG TO ANIMATE THE VARIATON SWAP!
+
+WHEN AT COURSE AGAIN:
+
+    - book mentor ASAP, discuss
+    - COMPARE PROJECT VS. REQUIREMENTS
+        - including on mobile!
+    - DOCUMENTATIOOOOOONNNNN
+        
+FUTURE FINE-TUNING:
+
+    - how to make apples picked animate to go bigger/smaller from the centre, not corner anchor point?
+    - better way to do the timer - the switch is too long! Make it count, increment by 15 mins
+
+
+BUGS:
+    - the bin doesn't always return to the position in the very middle - it's sometimes off. Not sure why, but I think it mostly happens when the player clicks apples like crazy and bin2.png is loaded before bin.png even arrives? Needs checking whether the issue persists when the multi-clicking on the same apple thing is fixed.
+
+PROBLEMS:
+    - initially, the apple was to be picked on a click, dropped on right click. BUT right click is context menu by default, and even if it's overriden, it cannot be done on mobile devices. What now?
+        - doubleclick instead of right click: then the click event will fire first, unless I make a script that counts the clicks and then determines which function to run based on that. BUT that would slow everything down, and the gameplay was supposed to rely on the player's clicking speed;
+        - right click on pc, sth else on mobile:
+            - swipe? (best idea prooly)
+            - bonus button for shaking tree right away?
+            - ???
+
+    - accidental dragging stops the click event. LOOK INTO IT!!! - it's killing the speed 
+
+    - you can doubleclick an element for more points while the animation is running - disable that! block adding points after the 1st click
+
+    - page not scrollable - while picking screen should be locked, the other two should not be. Why? (looks like it's something with height 100%)
+
+==================================
+
+PROBLEMS OVERCOME:
+
+    - badApplePercentage would display in the console as NaN, and because of that, the player's victory would never be registered as such - code:
+
+            
+                    let badApplePercentage = (badApples - applesPicked)/(applesPicked)*100;
+
+                    function endScreen () {
+                        $('#screen').html(`
+                        <div id ='win-fail-div'>
+                        </div>
+                        <div id='outcome-text-div'>
+                        </div>
+                        <div id='score-div'>
+                        </div>
+                        <div id='tryagain'>
+                            <button>GIVE IT ANOTHER GO!</button>
+                        </div>
+                            `);
+                        
+                        $('#screen').removeClass('picking-screen').addClass('end-screen');
+
+                        if (applesPicked >= 151 && badApplePercentage <= 5){
+                            $('#win-fail-div').html(`
+                                <h1>APPLE VICTORIA!</h1>
+                            `)
+                        } else {
+                            $('#win-fail-div').html(`
+                                <h1>APPLE DEFEAT!</h1>
+                            `)
+                        }
+                        
+                        console.log(badApplePercentage);
+                    }
+    
+    Due to badApplePercentage being put outside of the endScreen function, it would get calculated before any apples were picked, resulting in division by 0. PRoblem was solved by moving the code inside of the function AND only running it if there were any apples picked (during the time I was working on the end screen, I would call it before the game to make it easier for myself).
+
+
+    - function run by clicking on an element targeted by its id wouldn't work if that element was created with another function, as the element didn't exist at the time the function was loaded. Solved by targeting the document instead and adding the element by its id as a parameter. 
+
+        - nextTree is executed, BUT the if statement doesn't see apple-div as empty, even though it is empty. I thought the issue might lie with the animation of the last apple in the div being picked or dropped still playing before the element is actually removed from the DOM, so I tried movifg the nextTree function call to inside of the animation's callback function, after (this).remove method, to ensure that it gets called after the element has actually been removed. This did not solve the issue. Is it possible the DOM takes even more time to update? If so, I might need to try the asynchronous function thing.
+
+            $(this).animate({height: '1px', width: '1px', opacity: 0}).promise().done(function() {
+                $(this).remove();
+                console.log('Apple removed');
+                showBinFullnessLevel();
+                nextBin();
+                nextTree();    
+            });
+        
+            - did not work...
+        
+            next attempt: changing the way we check if apple div is empty, counting the length of its contents, checking if it's 0:
+        
+            function nextTree(){
+                if ($('#apple-div').children().length === 0) {
+                    console.log('yeah');
+                }
+            }
+        
+            IT WORKED!!!
+
+    - media queries not being applied properly. Apparently I've been arranging them wrongly - in the ascending order, as I thought this is the right way - but I'm designing desktop first, so I should've been doing it the other way round.
+
+BUGS FIXED:
+
+    - FIX THE BUG where after the 2nd apple, the new ones are added to the 2nd one as a row - they have the same class... they can't have the same class - and existing apples would move, and not appear within the area they should appear in (wrong position: usage)
+    - first apple always appears at the same spot, defined by default css; then it's 'moved'in the right spot by clicking the button, and a new apple appears in that spot, as if it's thrown rom there. Why? - bc I put styling on existing divs in the DOM, not the current one I just made that's yet to be appended; fixed!
+
+    ----------------------
+
+    Cast of characters:
+
+    - Rob - Bob (Lady Sun and the Horrible Nightmare)
+    - Barry - Larry
+    - Rex - Fido
+    - Janie - Jay (Nelee)
+    - Raff - Donatello
+    - Shane - Rick
+    - Zbigniew/Oscar - Beezee
+    - Jesse - James
+    - Monika - Eliška
+    - Jessica - 
+    - Simon -
+    - Becky - -> (male) Bucky
+    - Benji - -> (female) Binji
+    - Martin - 
+    - Shirral
+
+
+    ============================================
+
+    RESOURCES
+
+    - right click event: https://api.jquery.com/contextmenu/
+    - trying to figure out th solution to the check-if-applediv-empty problem: https://www.geeksforgeeks.org/how-to-check-an-html-element-is-empty-using-jquery/
+    - figuring out how to do the timer: https://www.w3schools.com/jsref/met_win_setinterval.asp , https://developer.mozilla.org/en-US/docs/Web/API/setInterval
+    - rounding numbers to 1 decimal point: https://www.altcademy.com/blog/how-to-round-numbers-in-javascript/  
+    - preventing user selection: https://www.w3schools.com/howto/howto_css_disable_text_selection.asp
+    - preventing dragging: https://stackoverflow.com/questions/62097523/disable-dragging-of-image-in-entire-project-html-pages
+    - hiding the scroll bar: https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp
+    - fixing issue with media queries not being applied properly: https://blog.openreplay.com/understanding-css-media-queries/
+    - media queries - detecting ouch devices: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Media_queries and https://stackoverflow.com/questions/26546254/how-to-write-css-media-queries-to-detect-a-touchscreen-device
+
+    - image upscaler: https://imgupscaler.com/
+    - AI generator for start & end bg: Dall-E
+    - colour picker: https://imagecolorpicker.com/en
+    - Procreate - for creating custom art assets
+
+
+
+
+====================
+
+
+
