@@ -97,6 +97,7 @@ function newTree(){
     for (let i = 0; i < appleAmount; i++) {
         applesAppear();
       }
+    $('.apple-picture').bind('swipedown', dropApple);
 } 
 
 $(document).on('click', '#gamestart', newTree);
@@ -127,6 +128,8 @@ function pickApple(){
     });
 }
 
+//FIX THE ANIMATION - NOW BROKEN!!! - ONLY OPACITY WORKING
+
 $(document).on('click', '.apple-picture', pickApple);
 
 function dropApple(){
@@ -138,8 +141,7 @@ function dropApple(){
 }
 
 $(document).on('contextmenu', '.apple-picture', dropApple);
-$(document).on('swipedown', '.apple-picture', dropApple);
-/* $('.apple-picture').bind('swipedown', dropApple); */
+
 
 function nextBin(){
     
